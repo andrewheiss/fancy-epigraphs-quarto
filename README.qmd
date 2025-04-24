@@ -1,0 +1,147 @@
+---
+format: 
+  gfm: 
+    wrap: preserve
+---
+
+# Fancy Quarto epigraphs
+
+This extension provides a shortcode for including nicely typeset [epigraphs](https://en.wikipedia.org/wiki/Epigraph_(literature)) in Quarto documents.
+
+This text:
+
+```qmd
+{{{< epigraph "Do or do not. There is no try." source="Yoda" >}}}
+```
+
+…will appear like this:
+
+![](README_img/yoda-alone.png)
+
+This works in all formats. In HTML, Typst PDFs, and LaTeX PDFs there is special styling to make everything left-aligned-within-a-right-aligned box; in all other formats, epigraphs appear as standard blockquotes. [See below](#using) for more details.
+
+![](README_img/examples.png)
+
+## Installing
+
+Run this terminal command to install the shortcode in your Quarto project:
+
+```bash
+quarto add andrewheiss/fancy-epigraphs-quarto
+```
+
+This will install the extension under the `_extensions` subdirectory. If you're using version control, you will want to check in this directory.
+
+## Using
+
+### Shortcode
+
+Basic epigraph:
+
+```qmd
+{{{< epigraph "Do or do not. There is no try." source="Yoda" >}}}
+```
+
+Epigraph with markdown formatting in the quote and/or source:
+
+```qmd
+{{{< epigraph "Do or **do not**. There *is* no try." source="~~Grogu~~Yoda" >}}}
+```
+
+Epigraph without a source:
+
+```qmd
+{{{< epigraph "Do or do not. There is no try." source="Yoda" >}}}
+```
+
+### HTML-specific options
+
+The rendered HTML follows [Bootstrap's semantic structure for blockquotes](https://getbootstrap.com/docs/5.2/content/typography/#naming-a-source). I include it in a `div` with some additional Bootstrap CSS classes to make the text left-aligned within a right-aligned block that takes up 50% of the page width, resulting in HTML like this:
+
+```html
+<div class="epigraph-wrapper clearfix">
+  <figure class="text-end w-50 float-end">
+    <blockquote class="blockquote">
+      <p>Do or do not. There is no try.</p>
+    </blockquote>
+    <figcaption class="blockquote-footer">
+      Yoda
+    </figcaption>
+  </figure>
+</div>
+```
+
+You can adjust the CSS however you want based on these classes. As an example, `_extensions/epigraph/epigraph.css` will disable the left border that Bootstrap includes on blockquote elements by default.
+
+You can either include your own custom epigraph CSS settings:
+
+```yaml
+format:
+  html:
+    css: whatever.css
+```
+
+or you can use the `epigraph-html` format, which is the regular HTML format but with `_extensions/epigraph/epigraph.css` included automatically:
+
+```yaml
+format:
+  epigraph-html: default
+```
+
+### PDF/LaTeX-specific options
+
+Epigraphs are typset using the `\epigraph{}{}` command, which means you must enable [the epigraph package](https://ctan.org/pkg/epigraph?lang=en). You can do this using the `epigraph-pdf` format, which inserts `_extensions/epigraph/epigraph.tex` automatically:
+
+```yaml
+format:
+  epigraph-pdf: default
+```
+
+Or you can use the regular PDF format and insert whatever settings you want:
+
+```yaml
+format:
+  pdf:
+    include-in-header: 
+      text: |
+        \usepackage{epigraph}
+        \setlength{\epigraphrule}{0em}
+        \setlength{\beforeepigraphskip}{-2em}
+        \setlength{\afterepigraphskip}{1em}
+```
+
+### Typst-specific options
+
+There's nothing special to do for typst. Epigraphs will be typeset like this:
+
+```typst
+#{
+  show quote: set align(left)
+  show quote: set pad(left: 65%, right: 0em)
+  
+  quote(
+    block: true,
+    attribution: [Yoda]
+  )[Do or do not. There is no try.]
+}
+```
+
+### Other formats
+
+All other formats (Word, revealjs, Markdown, whatever) will typeset the epigraph as if it had been written like this:
+
+```default
+> Quote to include
+> 
+> ---Source
+```
+
+## Example
+
+Here is the source code for a minimal example: [`minimal-example.qmd`](minimal-example.qmd).
+
+And here's a fully annotated example: [`example.qmd`](example.qmd). It looks like this when rendered:
+
+- LaTeX: [`example-latex.pdf`](example-latex.pdf)
+- Typst: [`example-typst.pdf`](example-typst.pdf)
+- Markdown: [`example.md`](example.md)

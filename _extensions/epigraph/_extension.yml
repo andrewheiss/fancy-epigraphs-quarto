@@ -1,0 +1,13 @@
+title: Epigraph
+author: Andrew Heiss
+version: 0.0.1
+quarto-required: ">=1.7.0"
+contributes:
+  shortcodes:
+    - epigraph.lua
+  formats:
+    html:
+      css: epigraph.css
+    pdf:
+      include-in-header:
+        - file: epigraph.tex

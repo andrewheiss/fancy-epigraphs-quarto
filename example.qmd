@@ -1,0 +1,45 @@
+---
+title: "Fancy epigraphs"
+format: 
+  # Use the regular html format and specify an optional custom CSS file...
+  html: 
+    css: _extensions/epigraph/epigraph.css
+
+  # ... or use the epigraph-html format, which includes _extensions/epigraph/epigraph.css
+  epigraph-html: default
+
+  # Use the regular pdf format and enable the epigraph package and custom settings...
+  pdf:
+    include-in-header: 
+      text: |
+        \usepackage{epigraph}
+        \setlength{\epigraphrule}{0em}
+        \setlength{\beforeepigraphskip}{-2em}
+        \setlength{\afterepigraphskip}{1em}
+
+  # ... or use the epigraph-pdf format to include those settings automatically
+  epigraph-pdf: 
+    output-file: example-latex.pdf
+
+  # Typst will work like normal---there's no need for extra includes
+  typst: 
+    output-file: example-typst.pdf
+
+  # All other formats will display epigraph content like this:
+  #
+  # > Quote to include
+  # > 
+  # > ---Source
+  docx: default
+  gfm: default
+---
+
+{{< epigraph "Do or do not. There is no try." source="Yoda" >}}
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sagittis posuere ligula sit amet lacinia. Duis dignissim pellentesque magna, rhoncus congue sapien finibus mollis. Ut eu sem laoreet, vehicula ipsum in, convallis erat. Vestibulum magna sem, blandit pulvinar augue sit amet, auctor malesuada sapien. Nullam faucibus leo eget eros hendrerit, non laoreet ipsum lacinia.
+
+## A heading
+
+{{< epigraph "No one is useless in this world who lightens the burden of it to anyone else." source="Charles Dickens, *Our Mutual Friend*, book 3, chapter 9" >}}
+
+Curabitur cursus diam elit, non tempus ante volutpat a. Quisque hendrerit blandit purus non fringilla. Integer sit amet elit viverra ante dapibus semper. Vestibulum viverra rutrum enim, at luctus enim posuere eu. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
