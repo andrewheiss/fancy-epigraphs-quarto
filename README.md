@@ -47,7 +47,7 @@ Epigraph with markdown formatting in the quote and/or source:
 Epigraph without a source:
 
 ``` qmd
-{{< epigraph "Do or do not. There is no try." source="Yoda" >}}
+{{< epigraph "Do or do not. There is no try." >}}
 ```
 
 ### HTML-specific options
